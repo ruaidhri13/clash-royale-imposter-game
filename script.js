@@ -23,6 +23,8 @@ let currentPlayer = 1;
 let imposter = 0;
 let mainCard = "";
 let hintCard = "";
+let currentCluePlayer = 1;
+let clues = [];
 
 // DOM ELEMENTS
 const setupScreen = document.getElementById("setup-screen");
@@ -34,6 +36,10 @@ const nextBtn = document.getElementById("nextPlayerBtn");
 
 const playerLabel = document.getElementById("playerLabel");
 const roleText = document.getElementById("roleText");
+
+const clueScreen = document.getElementById("clue-screen");
+const clueBoardScreen = document.getElementById("clue-board-screen");
+
 
 
 // START GAME
@@ -80,7 +86,6 @@ function showPlayerRole() {
 }
 
 
-
 // NEXT PLAYER BUTTON
 nextBtn.addEventListener("click", () => {
     currentPlayer++;
@@ -89,8 +94,73 @@ nextBtn.addEventListener("click", () => {
         // Move to gameplay screen
         revealScreen.classList.add("hidden");
         gameScreen.classList.remove("hidden");
+
+        // Move to first clue round after 1 second
+        setTimeout(startClueRound, 1000);
     } else {
         // Show next player's role
         showPlayerRole();
     }
 });
+
+
+// ===== START CLUE ROUND =====
+function startClueRound() {
+    gameScreen.classList.add("hidden");
+    clueScreen.classList.remove("hidden");
+
+    currentCluePlayer = 1;
+    clues = [];
+
+    updateCluePrompt();
+}
+
+
+// Show which player enters clue
+function updateCluePrompt() {
+    document.getElementById("cluePlayerLabel").textContent = 
+        `Player ${currentCluePlayer}, your turn`;
+}
+
+
+// ===== SUBMIT CLUE =====
+document.getElementById("submitClueBtn").addEventListener("click", () => {
+    const value = document.getElementById("clueInput").value.trim();
+    if (value === "") return;
+
+    clues.push(`Player ${currentCluePlayer}: ${value}`);
+    document.getElementById("clueInput").value = "";
+
+    currentCluePlayer++;
+
+    if (currentCluePlayer > totalPlayers) {
+        // Show clue board
+        showClueBoard();
+    } else {
+        updateCluePrompt();
+    }
+});
+
+
+// ===== SHOW ALL CLUES FOR THE ROUND =====
+function showClueBoard() {
+    clueScreen.classList.add("hidden");
+    clueBoardScreen.classList.remove("hidden");
+
+    const list = document.getElementById("clueList");
+    list.innerHTML = "";
+
+    clues.forEach(clue => {
+        const li = document.createElement("li");
+        li.textContent = clue;
+        list.appendChild(li);
+    });
+}
+
+
+// ===== NEXT ROUND =====
+document.getElementById("nextRoundBtn").addEventListener("click", () => {
+    clueBoardScreen.classList.add("hidden");
+    startClueRound();   // Repeat gameplay
+});
+

@@ -164,3 +164,25 @@ document.getElementById("nextRoundBtn").addEventListener("click", () => {
     startClueRound();   // Repeat gameplay
 });
 
+// ===== CARD SELECTION LOGIC =====
+let selectedCard = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        card.addEventListener("click", () => {
+            // Remove highlight from previous selection
+            cards.forEach(c => c.classList.remove("selected"));
+
+            // Highlight new card
+            card.classList.add("selected");
+
+            // Store selected card in state
+            selectedCard = card.dataset.card;
+
+            console.log("Selected card:", selectedCard);
+        });
+    });
+});
+

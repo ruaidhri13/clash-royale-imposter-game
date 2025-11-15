@@ -43,3 +43,20 @@ button {
     margin-bottom: 8px;
     font-size: 18px;
 }
+.card.selected {
+    border: 3px solid #4CAF50;
+    transform: scale(1.05);
+}
+.card {
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+#clueDisplay {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}

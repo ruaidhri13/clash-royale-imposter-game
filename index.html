@@ -6,9 +6,11 @@
     <title>Clash Royale Imposter Game</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
     <h1>Clash Royale Imposter Game</h1>
 
+    <!-- SETUP SCREEN -->
     <div id="setup-screen">
         <h2>Game Setup</h2>
 
@@ -24,7 +26,23 @@
         <button id="startGameBtn">Start Game</button>
     </div>
 
+
+    <!-- ROLE REVEAL SCREEN -->
+    <div id="reveal-screen" class="hidden">
+        <h2 id="playerLabel"></h2>
+        <p id="roleText"></p>
+        <button id="nextPlayerBtn">Next Player</button>
+    </div>
+
+
+    <!-- GAMEPLAY SCREEN -->
+    <div id="game-screen" class="hidden">
+        <h2>All players have seen their role.</h2>
+        <p>Gameplay will start here (coming in Commit 4).</p>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 
 </html>

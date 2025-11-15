@@ -1,0 +1,24 @@
+/* Setup Screen Styling */
+#setup-screen {
+    margin-top: 40px;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    width: 250px;
+}
+
+#setup-screen h2 {
+    margin-bottom: 10px;
+}
+
+#playerCount {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 15px;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}

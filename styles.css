@@ -1,62 +1,84 @@
-/* Setup Screen Styling */
-#setup-screen {
-    margin-top: 40px;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    width: 250px;
+:root{
+  --bg:#f6f7fb;
+  --panel:#ffffff;
+  --accent:#2b79ff;
+  --danger:#e23a3a;
+  --muted:#666;
+  --radius:10px;
+  --pad:18px;
+  --maxw:520px;
+  --shadow: 0 6px 18px rgba(20,20,40,0.06);
 }
 
-#setup-screen h2 {
-    margin-bottom: 10px;
+*{box-sizing:border-box}
+body{
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  margin:0;
+  padding:32px;
+  display:flex;
+  justify-content:center;
+}
+main{
+  width:100%;
+  max-width:var(--maxw);
 }
 
-#playerCount {
-    width: 100%;
-    padding: 6px;
-    margin-bottom: 15px;
+h1{margin:0 0 14px 0; font-size:22px}
+.card-panel{
+  background:var(--panel);
+  border-radius:var(--radius);
+  padding:var(--pad);
+  box-shadow:var(--shadow);
+  margin:14px 0;
 }
 
-button {
-    padding: 10px 15px;
-    font-size: 16px;
-    cursor: pointer;
+/* basic form */
+label{display:block;margin-bottom:6px;font-weight:600}
+select, input[type="text"]{
+  width:100%;
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #e6e8ee;
+  margin-bottom:10px;
+  font-size:15px;
+}
+.controls-row{display:flex;gap:10px;align-items:center;margin-top:10px}
+.btn{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+.btn.small{padding:8px 10px;font-size:13px}
+.btn.red{background:var(--danger)}
+.muted{color:var(--muted);margin-top:8px}
+.small-line{font-size:13px}
+
+/* reveal screen */
+.reveal-inner{display:flex;flex-direction:column;gap:12px;align-items:center}
+.reveal-box{
+  background:#f7fbff;
+  border-radius:8px;
+  padding:14px;
+  width:100%;
+  text-align:center;
+  border:1px dashed #d6e6ff;
+}
+.reveal-role{font-weight:700;margin-bottom:6px}
+.reveal-card{font-size:20px}
+
+/* vote list */
+.vote-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.vote-btn{
+  padding:10px 12px;border-radius:8px;border:1px solid #e6e8ee;background:white;cursor:pointer;
 }
 
-.hidden {
-    display: none;
-}
+/* result */
+.result-text{font-size:16px;margin:12px 0}
 
-#reveal-screen, #game-screen {
-    margin-top: 40px;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    width: 300px;
-}
-#clueList {
-    margin-top: 20px;
-    padding-left: 15px;
-}
-
-#clueList li {
-    margin-bottom: 8px;
-    font-size: 18px;
-}
-.card.selected {
-    border: 3px solid #4CAF50;
-    transform: scale(1.05);
-}
-.card {
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
-}
-#clueDisplay {
-    margin-top: 20px;
-    font-size: 20px;
-    font-weight: bold;
-}
+/* hidden utility */
+.hidden{display:none}

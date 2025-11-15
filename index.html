@@ -1,179 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clash Royale Imposter Game</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clash Royale Imposter — MVP</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-    <h1>Clash Royale Imposter Game</h1>
+  <main>
+    <h1>Clash Royale Imposter</h1>
 
-    <!-- SETUP SCREEN -->
-    <div id="setup-screen">
-        <h2>Game Setup</h2>
+    <!-- SETUP -->
+    <section id="setup-screen" class="card-panel">
+      <h2>Game Setup</h2>
+      <label for="playerCount">Number of players</label>
+      <select id="playerCount">
+        <option value="3">3 players</option>
+        <option value="4" selected>4 players</option>
+        <option value="5">5 players</option>
+        <option value="6">6 players</option>
+        <option value="7">7 players</option>
+        <option value="8">8 players</option>
+      </select>
 
-        <label for="playerCount">Number of Players:</label>
-        <select id="playerCount">
-            <option value="4">4 Players</option>
-            <option value="5">5 Players</option>
-            <option value="6">6 Players</option>
-            <option value="7">7 Players</option>
-            <option value="8">8 Players</option>
-        </select>
+      <div class="controls-row">
+        <button id="startGameBtn" class="btn">Start Game</button>
+        <button id="shuffleCardBtn" class="btn small">Pick new card</button>
+      </div>
 
-        <button id="startGameBtn">Start Game</button>
-    </div>
+      <p class="muted">Host tip: use "Pick new card" until you like the secret card, then press Start Game.</p>
 
+      <div id="pickedCardPreview" class="muted small-line">Card preview: <strong id="previewCard">—</strong></div>
+    </section>
 
-    <!-- ROLE REVEAL SCREEN -->
-    <div id="reveal-screen" class="hidden">
-        <h2 id="playerLabel"></h2>
-        <p id="roleText"></p>
-        <button id="nextPlayerBtn">Next Player</button>
-    </div>
+    <!-- ROLE REVEAL -->
+    <section id="reveal-screen" class="card-panel hidden">
+      <h2 id="revealTitle">Player 1</h2>
 
+      <div id="revealInner" class="reveal-inner">
+        <div id="privatePrompt">Tap "Reveal" to see your card (then tap "Hide & Pass").</div>
 
-    <!-- GAMEPLAY SCREEN -->
-    <div id="game-screen" class="hidden">
-        <h2>All players have seen their card.</h2>
-        <p>Gameplay and clue words will be added next (Commit 5).</p>
-    </div>
+        <div id="revealBox" class="reveal-box hidden">
+          <div id="revealRole" class="reveal-role"></div>
+          <div id="revealCard" class="reveal-card"></div>
+        </div>
 
-    <!-- CLUE ROUND SCREEN -->
-    <div id="clue-screen" class="hidden">
-        <h2 id="cluePlayerLabel"></h2>
+        <div class="controls-row">
+          <button id="revealBtn" class="btn">Reveal</button>
+          <button id="hidePassBtn" class="btn small hidden">Hide & Pass</button>
+        </div>
+      </div>
+    </section>
 
-        <p>Enter your clue word:</p>
-        <input id="clueInput" type="text" placeholder="Your clue..." />
+    <!-- GAME SCREEN -->
+    <section id="game-screen" class="card-panel hidden">
+      <h2>Discussion</h2>
 
-        <button id="submitClueBtn">Submit Clue</button>
-    </div>
+      <p class="muted">Players speak out loud and try to find the imposter. The app does not record spoken clues.</p>
 
+      <div class="controls-row">
+        <button id="startDiscussionBtn" class="btn">Start Discussion</button>
+        <button id="revealImposterBtn" class="btn red">Reveal Imposter</button>
+        <button id="restartBtn" class="btn small">Restart</button>
+      </div>
 
-    <!-- CLUE BOARD SCREEN -->
-    <div id="clue-board-screen" class="hidden">
-        <h2>Round Clues</h2>
+      <div id="voteInstructions" class="muted small-line">After the group votes in-person, tap the player you think is the imposter to check.</div>
 
-        <ul id="clueList"></ul>
+      <div id="voteList" class="vote-list"></div>
+    </section>
 
-        <button id="nextRoundBtn">Next Round</button>
-    </div>
+    <!-- RESULT SCREEN -->
+    <section id="result-screen" class="card-panel hidden">
+      <h2>Result</h2>
+      <div id="resultText" class="result-text"></div>
+      <div class="controls-row">
+        <button id="playAgainBtn" class="btn">Play Again</button>
+        <button id="backToSetupBtn" class="btn small">Back to Setup</button>
+      </div>
+    </section>
 
-    <!-- CARDS -->
-     <div id="card-container">
-        
-        <!-- TROOPS -->
-        <div class="card" data-card="knight">Knight</div>
-        <div class="card" data-card="archers">Archers</div>
-        <div class="card" data-card="skeletons">Skeletons</div>
-        <div class="card" data-card="goblins">Goblins</div>
-        <div class="card" data-card="spear_goblins">Spear Goblins</div>
-        <div class="card" data-card="bomber">Bomber</div>
-        <div class="card" data-card="giant">Giant</div>
-        <div class="card" data-card="mini_pekka">Mini P.E.K.K.A</div>
-        <div class="card" data-card="musketeer">Musketeer</div>
-        <div class="card" data-card="valkyrie">Valkyrie</div>
-        <div class="card" data-card="hog_rider">Hog Rider</div>
-        <div class="card" data-card="barbarians">Barbarians</div>
-        <div class="card" data-card="wall_breakers">Wall Breakers</div>
-        <div class="card" data-card="balloon">Balloon</div>
-        <div class="card" data-card="witch">Witch</div>
-        <div class="card" data-card="skeleton_army">Skeleton Army</div>
-        <div class="card" data-card="baby_dragon">Baby Dragon</div>
-        <div class="card" data-card="prince">Prince</div>
-        <div class="card" data-card="dark_prince">Dark Prince</div>
-        <div class="card" data-card="minions">Minions</div>
-        <div class="card" data-card="minion_horde">Minion Horde</div>
-        <div class="card" data-card="barbarian_hut">Barbarian Hut</div>
-        <div class="card" data-card="mega_minion">Mega Minion</div>
-        <div class="card" data-card="elite_barbarians">Elite Barbarians</div>
-        <div class="card" data-card="royal_giant">Royal Giant</div>
-        <div class="card" data-card="royal_recruits">Royal Recruits</div>
-        <div class="card" data-card="fisherman">Fisherman</div>
-        <div class="card" data-card="lumberjack">Lumberjack</div>
-        <div class="card" data-card="bandit">Bandit</div>
-        <div class="card" data-card="royal_ghost">Royal Ghost</div>
-        <div class="card" data-card="e_wizard">Electro Wizard</div>
-        <div class="card" data-card="wizard">Wizard</div>
-        <div class="card" data-card="ice_wizard">Ice Wizard</div>
-        <div class="card" data-card="bowler">Bowler</div>
-        <div class="card" data-card="hunter">Hunter</div>
-        <div class="card" data-card="archer_queen">Archer Queen</div>
-        <div class="card" data-card="monk">Monk</div>
-        <div class="card" data-card="phoenix">Phoenix</div>
-        <div class="card" data-card="golem">Golem</div>
-        <div class="card" data-card="ice_golem">Ice Golem</div>
-        <div class="card" data-card="night_witch">Night Witch</div>
-        <div class="card" data-card="lava_hound">Lava Hound</div>
-        <div class="card" data-card="inferno_dragon">Inferno Dragon</div>
-        <div class="card" data-card="mega_knight">Mega Knight</div>
-        <div class="card" data-card="ram_rider">Ram Rider</div>
-        <div class="card" data-card="sparky">Sparky</div>
-        <div class="card" data-card="pekka">P.E.K.K.A</div>
-        <div class="card" data-card="skeleton_dragons">Skeleton Dragons</div>
-        <div class="card" data-card="cannon_cart">Cannon Cart</div>
-        <div class="card" data-card="zappies">Zappies</div>
-        <div class="card" data-card="guards">Guards</div>
-        <div class="card" data-card="dart_goblin">Dart Goblin</div>
-        <div class="card" data-card="goblin_giant">Goblin Giant</div>
-        <div class="card" data-card="royal_hogs">Royal Hogs</div>
-        <div class="card" data-card="mother_witch">Mother Witch</div>
-        <div class="card" data-card="electro_giant">Electro Giant</div>
-        <div class="card" data-card="archer">Archer</div>
-        <div class="card" data-card="ice_spirit">Ice Spirit</div>
-        <div class="card" data-card="fire_spirit">Fire Spirit</div>
-        <div class="card" data-card="heal_spirit">Heal Spirit</div>
-        <div class="card" data-card="electro_spirit">Electro Spirit</div>
-        <div class="card" data-card="bats">Bats</div>
-        <div class="card" data-card="goblin_barrel">Goblin Barrel</div>
-        <div class="card" data-card="rascals">Rascals</div>
-        <div class="card" data-card="golden_knight">Golden Knight</div>
-        <div class="card" data-card="skeleton_king">Skeleton King</div>
-        <div class="card" data-card="mighty_miner">Mighty Miner</div>
-        <div class="card" data-card="princess">Princess</div>
-        <div class="card" data-card="miner">Miner</div>
-        <div class="card" data-card="ice_spirit">Ice Spirit</div>
-        <div class="card" data-card="firecracker">Firecracker</div>
-        <div class="card" data-card="goblin_cage">Goblin Cage</div>
-        <div class="card" data-card="mortar">Mortar</div>
-        <div class="card" data-card="bowler">Bowler</div>
-        <div class="card" data-card="tombstone">Tombstone</div>
+    <footer class="muted small-line">MVP — text-only. Images later.</footer>
+  </main>
 
-        <!-- SPELLS -->
-        <div class="card" data-card="zap">Zap</div>
-        <div class="card" data-card="arrows">Arrows</div>
-        <div class="card" data-card="fireball">Fireball</div>
-        <div class="card" data-card="rocket">Rocket</div>
-        <div class="card" data-card="freeze">Freeze</div>
-        <div class="card" data-card="lightning">Lightning</div>
-        <div class="card" data-card="rage">Rage</div>
-        <div class="card" data-card="clone">Clone</div>
-        <div class="card" data-card="poison">Poison</div>
-        <div class="card" data-card="tornado">Tornado</div>
-        <div class="card" data-card="barbarian_barrel">Barbarian Barrel</div>
-        <div class="card" data-card="log">The Log</div>
-        <div class="card" data-card="snowball">Giant Snowball</div>
-        <div class="card" data-card="earthquake">Earthquake</div>
-        <div class="card" data-card="mirror">Mirror</div>
-        <div class="card" data-card="invisibility">Invisibility</div>
-        <div class="card" data-card="graveyard">Graveyard</div>
-
-        <!-- BUILDINGS -->
-        <div class="card" data-card="cannon">Cannon</div>
-        <div class="card" data-card="tesla">Tesla</div>
-        <div class="card" data-card="inferno_tower">Inferno Tower</div>
-        <div class="card" data-card="bomb_tower">Bomb Tower</div>
-        <div class="card" data-card="goblin_hut">Goblin Hut</div>
-        <div class="card" data-card="furnace">Furnace</div>
-        <div class="card" data-card="xbow">X-Bow</div>
-        <div class="card" data-card="elixir_collector">Elixir Collector</div>
-        <div class="card" data-card="spawner_hut">Royal Hut</div>
-     </div>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
-
-
 </html>
